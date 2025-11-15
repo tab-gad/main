@@ -1,7 +1,9 @@
 # main
 - 준비할 것
+```
 main
 ㄴClassical(in [ADbench github](https://github.com/Minqi824/ADBench/tree/main/adbench/datasets/Classical))
+```
 ---
 - 명령어 예시
 
