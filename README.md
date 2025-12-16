@@ -42,9 +42,6 @@ python gad_1111.py -d 4 -se 1 -m 3
 - 시드(`-se`)
 
 ## Using TabPFN
-
-TabPFN 모델은 Hugging Face를 통해 배포되며, 사전 인증 절차가 필요
-
 ### Setup Steps
 
 1. 브라우저에서 아래 페이지 접속
@@ -55,5 +52,4 @@ https://huggingface.co/Prior-Labs/tabpfn_2_5
 ```bash
 hf auth login
 ```
-
-안내에 따라 Hugging Face access token 입력
+5. Hugging Face access token 입력
