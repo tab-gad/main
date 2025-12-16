@@ -1,0 +1,39 @@
+2025-12-16 20:31:24,606 - INFO - === ResAD Tabular Experiment Started ===
+2025-12-16 20:31:24,606 - INFO - Log file: logs\resad_tabular_20251216_203124.log
+2025-12-16 20:31:24,647 - INFO - Using device: cpu
+2025-12-16 20:31:24,647 - INFO - Experiment mode: cross_domain
+2025-12-16 20:31:24,647 - INFO - Loading datasets...
+2025-12-16 20:31:24,647 - INFO - Cross domain experiment:
+2025-12-16 20:31:24,647 - INFO -   Source datasets: ['breastw']
+2025-12-16 20:31:24,648 - INFO -   Target dataset: wdbc
+2025-12-16 20:31:24,661 - INFO - Dataset Information:
+2025-12-16 20:31:24,662 - INFO - Train (target): {'dataset_name': 'wdbc', 'split': 'train', 'shape': (256, 30), 'anomaly_ratio': '0.027', 'normal_samples': np.int64(249), 'anomaly_samples': np.int64(7), 'feature_names': ['feature_0', 'feature_1', 'feature_2', 'feature_3', 'feature_4', '...'], 'normalized': True, 'categorical_features': 0}
+2025-12-16 20:31:24,662 - INFO - Test (target): {'dataset_name': 'wdbc', 'split': 'test', 'shape': (111, 30), 'anomaly_ratio': '0.027', 'normal_samples': np.int64(108), 'anomaly_samples': np.int64(3), 'feature_names': ['feature_0', 'feature_1', 'feature_2', 'feature_3', 'feature_4', '...'], 'normalized': True, 'categorical_features': 0}
+2025-12-16 20:31:24,663 - INFO - Initializing ResAD model...
+2025-12-16 20:31:24,663 - INFO - Model configuration:
+2025-12-16 20:31:24,663 - INFO -   - Use multiscale: False
+2025-12-16 20:31:24,663 - INFO -   - Constraintor type: residual
+2025-12-16 20:31:24,663 - INFO -   - Estimator type: normal
+2025-12-16 20:31:24,663 - INFO -   - Training epochs: 2
+2025-12-16 20:31:24,663 - INFO -   - Learning rate: 0.001
+2025-12-16 20:31:24,667 - INFO - Starting model training...
+2025-12-16 20:31:49,934 - INFO - Fitting feature extractor with 249 normal samples
+2025-12-16 20:31:49,934 - INFO - Fitting TabPFN feature extractor with 249 training samples
+2025-12-16 20:31:49,935 - INFO - Initializing constraintor and estimator modules
+2025-12-16 20:31:59,497 - INFO - Feature extractor fitted. Embedding dimension: 192
+2025-12-16 20:31:59,497 - INFO - Feature extractor fitted successfully
+2025-12-16 20:31:59,497 - INFO - Starting feature constraintor training...
+2025-12-16 20:33:20,872 - INFO - Feature constraintor training completed
+2025-12-16 20:33:20,872 - INFO - Starting distribution estimator fitting...
+2025-12-16 20:33:25,797 - INFO - Distribution estimator fitted successfully
+2025-12-16 20:33:25,797 - INFO - ResAD training completed successfully!
+2025-12-16 20:33:25,799 - INFO - Evaluating model on test set...
+2025-12-16 20:33:25,799 - INFO - Predicting anomaly scores for DataLoader batches
+2025-12-16 20:33:50,732 - INFO - Predicted scores for 111 total samples
+2025-12-16 20:34:11,633 - INFO - === EXPERIMENT RESULTS ===
+2025-12-16 20:34:11,634 - INFO - AUC (Area Under ROC Curve): 1.0000
+2025-12-16 20:34:11,634 - INFO - AP (Average Precision): 1.0000
+2025-12-16 20:34:11,634 - INFO - Test samples: 111
+2025-12-16 20:34:11,634 - INFO - Anomaly ratio: 0.027
+2025-12-16 20:34:11,635 - INFO - Results saved to: results\results_cross_breastw_to_wdbc_20251216_203411.json
+2025-12-16 20:34:11,635 - INFO - === EXPERIMENT COMPLETED ===

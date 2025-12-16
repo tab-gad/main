@@ -1,0 +1,25 @@
+2025-12-16 20:51:26,126 - INFO - [resad_tabular.py:58] - === ResAD Tabular Experiment Started ===
+2025-12-16 20:51:26,126 - INFO - [resad_tabular.py:59] - Log file: logs\resad_tabular_20251216_205126.log
+2025-12-16 20:51:26,128 - INFO - [resad_tabular.py:404] - Using device: cpu
+2025-12-16 20:51:26,128 - INFO - [resad_tabular.py:405] - Experiment mode: cross_domain
+2025-12-16 20:51:26,129 - INFO - [resad_tabular.py:408] - Loading datasets...
+2025-12-16 20:51:26,129 - INFO - [resad_tabular.py:434] - Cross domain experiment:
+2025-12-16 20:51:26,129 - INFO - [resad_tabular.py:435] -   Source datasets: ['breastw']
+2025-12-16 20:51:26,129 - INFO - [resad_tabular.py:436] -   Target dataset: wdbc
+2025-12-16 20:51:26,139 - INFO - [resad_tabular.py:447] - Dataset Information:
+2025-12-16 20:51:26,139 - INFO - [resad_tabular.py:448] - Train (source combined): {'dataset_name': 'breastw', 'split': 'train', 'shape': (478, 9), 'anomaly_ratio': '0.349', 'normal_samples': np.int64(311), 'anomaly_samples': np.int64(167), 'feature_names': ['feature_0', 'feature_1', 'feature_2', 'feature_3', 'feature_4', '...'], 'normalized': True, 'categorical_features': 0}
+2025-12-16 20:51:26,139 - INFO - [resad_tabular.py:449] - Test (target): {'dataset_name': 'wdbc', 'split': 'test', 'shape': (111, 30), 'anomaly_ratio': '0.027', 'normal_samples': np.int64(108), 'anomaly_samples': np.int64(3), 'feature_names': ['feature_0', 'feature_1', 'feature_2', 'feature_3', 'feature_4', '...'], 'normalized': True, 'categorical_features': 0}
+2025-12-16 20:51:26,139 - INFO - [resad_tabular.py:461] - Initializing ResAD model...
+2025-12-16 20:51:26,139 - INFO - [resad_tabular.py:462] - Model configuration:
+2025-12-16 20:51:26,140 - INFO - [resad_tabular.py:463] -   - Use multiscale: False
+2025-12-16 20:51:26,140 - INFO - [resad_tabular.py:464] -   - Constraintor type: residual
+2025-12-16 20:51:26,140 - INFO - [resad_tabular.py:465] -   - Estimator type: normal
+2025-12-16 20:51:26,140 - INFO - [resad_tabular.py:466] -   - Training epochs: 1
+2025-12-16 20:51:26,140 - INFO - [resad_tabular.py:467] -   - Learning rate: 0.001
+2025-12-16 20:51:26,144 - INFO - [resad_tabular.py:471] - Starting model training...
+2025-12-16 20:51:46,994 - INFO - [resad_tabular.py:223] - Fitting feature extractor with 311 normal samples
+2025-12-16 20:51:46,995 - INFO - [resad_tabular.py:146] - Fitting TabPFN feature extractor with 311 training samples
+2025-12-16 20:51:46,996 - INFO - [resad_tabular.py:151] - Initializing constraintor and estimator modules
+2025-12-16 20:51:52,395 - INFO - [resad_tabular.py:154] - Feature extractor fitted. Embedding dimension: 192
+2025-12-16 20:51:52,395 - INFO - [resad_tabular.py:225] - Feature extractor fitted successfully
+2025-12-16 20:51:52,396 - INFO - [resad_tabular.py:228] - Pre-computing embeddings for training data...

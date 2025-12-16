@@ -1,0 +1,8 @@
+2025-12-16 20:40:10,188 - INFO - [resad_tabular.py:58] - === ResAD Tabular Experiment Started ===
+2025-12-16 20:40:10,188 - INFO - [resad_tabular.py:59] - Log file: logs\resad_tabular_20251216_204010.log
+2025-12-16 20:40:10,190 - INFO - [resad_tabular.py:373] - Using device: cpu
+2025-12-16 20:40:10,190 - INFO - [resad_tabular.py:374] - Experiment mode: cross_domain
+2025-12-16 20:40:10,190 - INFO - [resad_tabular.py:377] - Loading datasets...
+2025-12-16 20:40:10,191 - INFO - [resad_tabular.py:403] - Cross domain experiment:
+2025-12-16 20:40:10,191 - INFO - [resad_tabular.py:404] -   Source datasets: ['breastw', 'pima']
+2025-12-16 20:40:10,192 - INFO - [resad_tabular.py:405] -   Target dataset: wdbc
