@@ -4,6 +4,8 @@
 - **Tabular Generalist Anomaly Detection (GAD)** 실험을 위한 메인 실행 환경
 - 실험은 **ADBench Classical tabular datasets**를 기반으로 수행
 
+## Environment Requirements
+- **Python version**: `>= 3.6, < 3.10`
 
 ## Directory Structure
 - `main/`
