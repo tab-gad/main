@@ -4,7 +4,6 @@
 - **Tabular Generalist Anomaly Detection (GAD)** 실험을 위한 메인 실행 환경
 - 실험은 **ADBench Classical tabular datasets**를 기반으로 수행
 
----
 
 ## Directory Structure
 - `main/`
@@ -13,7 +12,6 @@
   - ADBench Classical 데이터셋 디렉토리  
   - Source: https://github.com/Minqi824/ADBench/tree/main/adbench/datasets/Classical
 
----
 
 ## Usage Example
 ```bash
