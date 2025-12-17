@@ -1,12 +1,31 @@
+import warnings
+import os
+import sys
+import logging
+
+# Suppress all warnings including hyperopt deprecation warnings
+warnings.filterwarnings('ignore')
+os.environ['PYTHONWARNINGS'] = 'ignore'
+
+# Suppress hyperopt specific warnings
+logging.getLogger('hyperopt').setLevel(logging.ERROR)
+
+# Redirect stderr to suppress pkg_resources warnings during imports
+from io import StringIO
+original_stderr = sys.stderr
+
 import numpy as np
 import torch
 import torch.nn as nn
 from sklearn.preprocessing import StandardScaler
-from tabpfn_extensions import TabPFNClassifier
-from tabpfn_extensions.embedding import TabPFNEmbedding
-import warnings
 
-warnings.filterwarnings('ignore')
+# Temporarily suppress stderr during TabPFN imports
+sys.stderr = StringIO()
+try:
+    from tabpfn_extensions import TabPFNClassifier
+    from tabpfn_extensions.embedding import TabPFNEmbedding
+finally:
+    sys.stderr = original_stderr
 
 
 class TabPFNFeatureExtractor(nn.Module):
@@ -25,9 +44,12 @@ class TabPFNFeatureExtractor(nn.Module):
         self.scaler = StandardScaler() if use_scaler else None
         self.is_fitted = False
         
-        # Initialize TabPFN classifier and embedding extractor
-        self.tabpfn_clf = TabPFNClassifier(n_estimators=n_estimators)
-        self.embedder = TabPFNEmbedding(tabpfn_clf=self.tabpfn_clf, n_fold=n_fold)
+        # Suppress warnings during TabPFN initialization
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore")
+            # Initialize TabPFN classifier and embedding extractor
+            self.tabpfn_clf = TabPFNClassifier(n_estimators=n_estimators)
+            self.embedder = TabPFNEmbedding(tabpfn_clf=self.tabpfn_clf, n_fold=n_fold)
         
         # For cross-domain: separate TabPFN for different feature dimensions
         self.cross_domain_extractors = {}  # {feature_dim: (tabpfn_clf, embedder, scaler)}
@@ -64,10 +86,13 @@ class TabPFNFeatureExtractor(nn.Module):
     def _get_or_create_extractor_for_dimension(self, feature_dim, X_sample):
         """Get or create a TabPFN extractor for the given feature dimension."""
         if feature_dim not in self.cross_domain_extractors:
-            # Create new extractor for this dimension
-            tabpfn_clf = TabPFNClassifier(n_estimators=self.n_estimators)
-            embedder = TabPFNEmbedding(tabpfn_clf=tabpfn_clf, n_fold=self.n_fold)
-            scaler = StandardScaler() if self.use_scaler else None
+            # Suppress warnings during TabPFN initialization
+            with warnings.catch_warnings():
+                warnings.simplefilter("ignore")
+                # Create new extractor for this dimension
+                tabpfn_clf = TabPFNClassifier(n_estimators=self.n_estimators)
+                embedder = TabPFNEmbedding(tabpfn_clf=tabpfn_clf, n_fold=self.n_fold)
+                scaler = StandardScaler() if self.use_scaler else None
             
             # Fit the new extractor on a sample of the data
             if scaler is not None:
@@ -111,12 +136,14 @@ class TabPFNFeatureExtractor(nn.Module):
                 X_processed = X
                 
             # Extract embeddings using the fitted TabPFN
-            embeddings = self.embedder.get_embeddings(
-                self.X_train_ref, 
-                self.y_train_ref, 
-                X_processed, 
-                data_source=data_source
-            )
+            with warnings.catch_warnings():
+                warnings.simplefilter("ignore")
+                embeddings = self.embedder.get_embeddings(
+                    self.X_train_ref, 
+                    self.y_train_ref, 
+                    X_processed, 
+                    data_source=data_source
+                )
         else:
             # Cross-domain - use separate extractor for this feature dimension
             tabpfn_clf, embedder, scaler = self._get_or_create_extractor_for_dimension(feature_dim, X)
@@ -131,12 +158,14 @@ class TabPFNFeatureExtractor(nn.Module):
             y_ref = np.zeros(len(X_ref))
             
             # Extract embeddings using TabPFN with the new dimension data
-            embeddings = embedder.get_embeddings(
-                X_ref,
-                y_ref,
-                X_processed, 
-                data_source="test"  # Always use "test" for cross-domain
-            )
+            with warnings.catch_warnings():
+                warnings.simplefilter("ignore")
+                embeddings = embedder.get_embeddings(
+                    X_ref,
+                    y_ref,
+                    X_processed, 
+                    data_source="test"  # Always use "test" for cross-domain
+                )
         
         # Convert to tensor and handle shape
         embeddings = torch.tensor(embeddings, dtype=torch.float32)
