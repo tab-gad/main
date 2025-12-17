@@ -20,7 +20,7 @@ This project adapts the ResAD framework for tabular data by combining three key 
 Tabular Data → TabPFN Extractor → Feature Constraintor → Distribution Estimator → Anomaly Scores
      ↓              ↓                     ↓                      ↓
    Raw Features   Rich Embeddings    Constrained Embeddings   Likelihood Scores
-``
+```
 
 
 ### Key Components
