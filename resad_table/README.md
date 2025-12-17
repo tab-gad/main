@@ -10,17 +10,17 @@ This project adapts the ResAD framework for tabular data by combining three key 
 2. ** Feature Constraintor**: Learnable transformation to enhance anomaly-relevant features  
 3. ** Normal Distribution Estimator**: Estimates normal data distribution for anomaly scoring
 
+## Validation
+
+- 12/16: data cross domain - tabpfn embedding까지 확인
+
 ## 🏗️ Architecture
 
 ```
 Tabular Data → TabPFN Extractor → Feature Constraintor → Distribution Estimator → Anomaly Scores
      ↓              ↓                     ↓                      ↓
    Raw Features   Rich Embeddings    Constrained Embeddings   Likelihood Scores
-```
-
-## Validation
-
-- 12/16: data cross domain - tabpfn embedding까지 확인
+``
 
 
 ### Key Components
