@@ -18,6 +18,9 @@ Tabular Data → TabPFN Extractor → Feature Constraintor → Distribution Esti
    Raw Features   Rich Embeddings    Constrained Embeddings   Likelihood Scores
 ```
 
+### Validation
+- 12/16: data cross domain - tabpfn embedding까지 확인
+
 ### Key Components
 
 ### 1. Pre-trained Feature Extractor (TabPFN)
