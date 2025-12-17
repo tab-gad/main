@@ -7,9 +7,10 @@ import torch.nn as nn
 import torch.nn.functional as F
 from torch.utils.data import DataLoader
 from tqdm import tqdm
-from sklearn.metrics import roc_auc_score, average_precision_score
+from sklearn.metrics import roc_auc_score, average_precision_score, accuracy_score
 import json
 import logging
+import pandas as pd
 from datetime import datetime
 from pathlib import Path
 
@@ -155,9 +156,15 @@ def train_resad(config):
     auc = roc_auc_score(y_true, test_scores)
     ap = average_precision_score(y_true, test_scores)
     
+    # Calculate accuracy using threshold (median of scores)
+    threshold = np.median(test_scores)
+    y_pred = (test_scores > threshold).astype(int)
+    accuracy = accuracy_score(y_true, y_pred)
+    
     logger.info("=== EXPERIMENT RESULTS ===")
     logger.info(f"AUC (Area Under ROC Curve): {auc:.4f}")
     logger.info(f"AP (Average Precision): {ap:.4f}")
+    logger.info(f"Accuracy: {accuracy:.4f}")
     logger.info(f"Test samples: {len(y_true)}")
     logger.info(f"Anomaly ratio: {y_true.mean():.3f}")
     
@@ -173,6 +180,7 @@ def train_resad(config):
         'config': config_dict,
         'auc': float(auc),
         'ap': float(ap),
+        'accuracy': float(accuracy),
         'test_scores': test_scores.tolist(),
         'test_labels': y_true.tolist(),
         'experiment_time': datetime.now().isoformat()
@@ -192,7 +200,50 @@ def train_resad(config):
     with open(results_file, 'w') as f:
         json.dump(results, f, indent=2)
     
+    # Save summary to CSV file
+    csv_file = results_dir / "results.csv"
+    
+    # Prepare experiment summary row
+    if config.mode == 'cross_domain':
+        experiment_name = f"cross_{'-'.join(config.source_datasets)}_to_{config.target_dataset}"
+        datasets_info = f"{'+'.join(config.source_datasets)} → {config.target_dataset}"
+    else:
+        experiment_name = f"{config.dataset}_{config.mode}"
+        datasets_info = config.dataset
+    
+    summary_row = {
+        'timestamp': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+        'experiment_name': experiment_name,
+        'mode': config.mode,
+        'datasets': datasets_info,
+        'constraintor_type': config.constraintor_type,
+        'estimator_type': config.estimator_type,
+        'use_multiscale': config.use_multiscale,
+        'epochs': config.epochs,
+        'lr': config.lr,
+        'auc': float(auc),
+        'ap': float(ap),
+        'accuracy': float(accuracy),
+        'test_samples': len(y_true),
+        'anomaly_ratio': float(y_true.mean())
+    }
+    
+    # Check if CSV exists and load it, otherwise create new DataFrame
+    if csv_file.exists():
+        try:
+            csv_df = pd.read_csv(csv_file)
+            csv_df = pd.concat([csv_df, pd.DataFrame([summary_row])], ignore_index=True)
+        except Exception as e:
+            logger.warning(f"Error loading existing CSV, creating new: {e}")
+            csv_df = pd.DataFrame([summary_row])
+    else:
+        csv_df = pd.DataFrame([summary_row])
+    
+    # Save updated CSV
+    csv_df.to_csv(csv_file, index=False)
+    
     logger.info(f"Results saved to: {results_file}")
+    logger.info(f"Summary saved to: {csv_file}")
     logger.info("=== EXPERIMENT COMPLETED ===")
     
     return model, results

@@ -1,0 +1,4 @@
+timestamp,experiment_name,mode,datasets,constraintor_type,estimator_type,use_multiscale,epochs,lr,auc,ap,accuracy,test_samples,anomaly_ratio
+2025-12-17 10:02:13,breastw_single_domain,single_domain,breastw,residual,normal,False,1,0.001,0.9919590643274854,0.9845166212622158,0.8536585365853658,205,0.3512195121951219
+2025-12-17 10:04:08,cross_breastw_to_pima,cross_domain,breastw → pima,residual,normal,False,1,0.001,0.545432098765432,0.3841009030459554,0.5324675324675324,231,0.3506493506493506
+2025-12-17 10:29:20,cross_breastw_to_wdbc,cross_domain,breastw → wdbc,residual,normal,False,2,0.001,0.4598765432098766,0.036969535324798485,0.5135135135135135,111,0.02702702702702703
