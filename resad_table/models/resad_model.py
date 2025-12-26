@@ -10,6 +10,7 @@ from tqdm import tqdm
 
 # Import other model components
 from .tabpfn_extractor import TabPFNFeatureExtractor, MultiScaleTabPFNExtractor
+from .padding_extractor import PaddingFeatureExtractor, MultiScalePaddingExtractor
 from .constraintor import TabularFeatureConstraintor, ResidualConstraintor, AdaptiveConstraintor
 from .estimator import NormalDistributionEstimator, FlowBasedEstimator, EnsembleEstimator
 
@@ -19,7 +20,7 @@ class ResADTabular(nn.Module):
     ResAD for Tabular Data - Complete anomaly detection framework.
     
     This class integrates the three main components:
-    1. TabPFN feature extractor (pre-trained)
+    1. Feature extractor (TabPFN or Padding-based)
     2. Feature constraintor (learnable)
     3. Normal distribution estimator (learnable)
     """
@@ -28,15 +29,30 @@ class ResADTabular(nn.Module):
         super().__init__()
         self.config = config
         
-        # Initialize feature extractor
-        if config.use_multiscale:
-            self.feature_extractor = MultiScaleTabPFNExtractor(n_levels=config.n_scales)
+        # Initialize feature extractor based on config
+        if config.feature_extractor == 'tabpfn':
+            if config.use_multiscale:
+                self.feature_extractor = MultiScaleTabPFNExtractor(n_levels=config.n_scales)
+            else:
+                self.feature_extractor = TabPFNFeatureExtractor(
+                    n_estimators=config.n_estimators,
+                    n_fold=config.n_fold,
+                    use_scaler=config.use_scaler
+                )
+        elif config.feature_extractor == 'padding':
+            if config.use_multiscale:
+                self.feature_extractor = MultiScalePaddingExtractor(
+                    target_dim=192, 
+                    n_levels=config.n_scales
+                )
+            else:
+                self.feature_extractor = PaddingFeatureExtractor(
+                    target_dim=192,
+                    padding_mode=config.padding_mode,
+                    use_scaler=config.use_scaler
+                )
         else:
-            self.feature_extractor = TabPFNFeatureExtractor(
-                n_estimators=config.n_estimators,
-                n_fold=config.n_fold,
-                use_scaler=config.use_scaler
-            )
+            raise ValueError(f"Unknown feature extractor: {config.feature_extractor}")
         
         # Will be initialized after feature extractor is fitted
         self.constraintor = None
@@ -134,6 +150,9 @@ class ResADTabular(nn.Module):
         """Forward pass for inference."""
         # Extract embeddings
         embeddings = self.extract_embeddings(X, data_source=data_source)
+        
+        # Ensure embeddings are on the same device as the model
+        embeddings = embeddings.to(next(self.constraintor.parameters()).device)
         
         # Apply constraints
         constrained_embeddings = self.constraintor(embeddings)
@@ -273,6 +292,8 @@ class ResADTabular(nn.Module):
         
         # Use the normal embeddings and apply constraints to get final embeddings
         with torch.no_grad():
+            # Ensure embeddings are on the same device as the model
+            normal_embeddings = normal_embeddings.to(next(self.constraintor.parameters()).device)
             final_normal_embeddings = self.constraintor(normal_embeddings)
         
         # Fit estimator with constrained embeddings

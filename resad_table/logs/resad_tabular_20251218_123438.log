@@ -1,0 +1,58 @@
+2025-12-18 12:34:38,132 - INFO - [resad_tabular.py:63] - === ResAD Tabular Experiment Started ===
+2025-12-18 12:34:38,132 - INFO - [resad_tabular.py:64] - Log file: logs\resad_tabular_20251218_123438.log
+2025-12-18 12:34:38,135 - INFO - [resad_tabular.py:75] - Using device: cpu
+2025-12-18 12:34:38,136 - INFO - [resad_tabular.py:76] - Experiment mode: cross_domain
+2025-12-18 12:34:38,136 - INFO - [resad_tabular.py:79] - Loading datasets...
+2025-12-18 12:34:38,137 - INFO - [resad_tabular.py:105] - Cross domain experiment:
+2025-12-18 12:34:38,137 - INFO - [resad_tabular.py:106] -   Source datasets: ['breastw']
+2025-12-18 12:34:38,138 - INFO - [resad_tabular.py:107] -   Target dataset: pima
+2025-12-18 12:34:38,150 - INFO - [resad_tabular.py:118] - Dataset Information:
+2025-12-18 12:34:38,150 - INFO - [resad_tabular.py:119] - Train (source combined): {'dataset_name': 'breastw', 'split': 'train', 'shape': (478, 9), 'anomaly_ratio': '0.349', 'normal_samples': np.int64(311), 'anomaly_samples': np.int64(167), 'feature_names': ['feature_0', 'feature_1', 'feature_2', 'feature_3', 'feature_4', '...'], 'normalized': True, 'categorical_features': 0}
+2025-12-18 12:34:38,151 - INFO - [resad_tabular.py:120] - Test (target): {'dataset_name': 'pima', 'split': 'test', 'shape': (231, 8), 'anomaly_ratio': '0.351', 'normal_samples': np.int64(150), 'anomaly_samples': np.int64(81), 'feature_names': ['feature_0', 'feature_1', 'feature_2', 'feature_3', 'feature_4', '...'], 'normalized': True, 'categorical_features': 0}
+2025-12-18 12:34:38,152 - INFO - [resad_tabular.py:132] - Initializing ResAD model...
+2025-12-18 12:34:38,152 - INFO - [resad_tabular.py:133] - Model configuration:
+2025-12-18 12:34:38,153 - INFO - [resad_tabular.py:134] -   - Feature extractor: padding
+2025-12-18 12:34:38,155 - INFO - [resad_tabular.py:136] -   - Padding mode: mean
+2025-12-18 12:34:38,155 - INFO - [resad_tabular.py:137] -   - Use multiscale: False
+2025-12-18 12:34:38,156 - INFO - [resad_tabular.py:138] -   - Constraintor type: residual
+2025-12-18 12:34:38,156 - INFO - [resad_tabular.py:139] -   - Estimator type: normal
+2025-12-18 12:34:38,157 - INFO - [resad_tabular.py:140] -   - Training epochs: 20
+2025-12-18 12:34:38,157 - INFO - [resad_tabular.py:141] -   - Learning rate: 0.001
+2025-12-18 12:34:38,158 - INFO - [resad_tabular.py:145] - Starting model training...
+2025-12-18 12:35:03,302 - INFO - [resad_model.py:192] - Fitting feature extractor with 311 normal samples
+2025-12-18 12:35:03,304 - INFO - [resad_model.py:115] - Fitting TabPFN feature extractor with 311 training samples
+2025-12-18 12:35:03,307 - INFO - [resad_model.py:120] - Initializing constraintor and estimator modules
+2025-12-18 12:35:03,316 - INFO - [resad_model.py:123] - Feature extractor fitted. Embedding dimension: 192
+2025-12-18 12:35:03,318 - INFO - [resad_model.py:194] - Feature extractor fitted successfully
+2025-12-18 12:35:03,318 - INFO - [resad_model.py:197] - Pre-computing embeddings for training data...
+2025-12-18 12:35:27,545 - INFO - [resad_model.py:208] - Batch 0: features shape=(64, 9), embeddings shape=torch.Size([64, 192]), labels shape=(64,)
+2025-12-18 12:35:27,551 - INFO - [resad_model.py:208] - Batch 1: features shape=(64, 9), embeddings shape=torch.Size([64, 192]), labels shape=(64,)
+2025-12-18 12:35:27,553 - INFO - [resad_model.py:208] - Batch 2: features shape=(64, 9), embeddings shape=torch.Size([64, 192]), labels shape=(64,)
+2025-12-18 12:35:27,556 - INFO - [resad_model.py:208] - Batch 3: features shape=(64, 9), embeddings shape=torch.Size([64, 192]), labels shape=(64,)
+2025-12-18 12:35:27,557 - INFO - [resad_model.py:208] - Batch 4: features shape=(64, 9), embeddings shape=torch.Size([64, 192]), labels shape=(64,)
+2025-12-18 12:35:27,558 - INFO - [resad_model.py:208] - Batch 5: features shape=(64, 9), embeddings shape=torch.Size([64, 192]), labels shape=(64,)
+2025-12-18 12:35:27,559 - INFO - [resad_model.py:208] - Batch 6: features shape=(64, 9), embeddings shape=torch.Size([64, 192]), labels shape=(64,)
+2025-12-18 12:35:27,560 - INFO - [resad_model.py:208] - Batch 7: features shape=(30, 9), embeddings shape=torch.Size([30, 192]), labels shape=(30,)
+2025-12-18 12:35:28,332 - INFO - [resad_model.py:216] - Total embeddings shape: torch.Size([478, 192])
+2025-12-18 12:35:28,333 - INFO - [resad_model.py:217] - Total labels shape: torch.Size([478])
+2025-12-18 12:35:28,334 - INFO - [resad_model.py:218] - Total samples: embeddings=478, labels=478
+2025-12-18 12:35:28,335 - INFO - [resad_model.py:224] - Normal embeddings shape for constraintor training: torch.Size([311, 192])
+2025-12-18 12:35:28,335 - INFO - [resad_model.py:227] - Starting feature constraintor training...
+2025-12-18 12:35:31,972 - INFO - [resad_model.py:282] - Epoch 10: Average Loss = 0.108501
+2025-12-18 12:35:32,628 - INFO - [resad_model.py:282] - Epoch 20: Average Loss = 0.082956
+2025-12-18 12:35:32,630 - INFO - [resad_model.py:284] - Feature constraintor training completed
+2025-12-18 12:35:32,631 - INFO - [resad_model.py:287] - Starting distribution estimator fitting...
+2025-12-18 12:35:32,639 - INFO - [resad_model.py:296] - Distribution estimator fitted successfully
+2025-12-18 12:35:32,640 - INFO - [resad_model.py:299] - ResAD training completed successfully!
+2025-12-18 12:35:32,641 - INFO - [resad_tabular.py:149] - Evaluating model on test set...
+2025-12-18 12:35:32,641 - INFO - [resad_model.py:361] - Predicting anomaly scores for DataLoader batches
+2025-12-18 12:35:58,018 - INFO - [resad_model.py:368] - Predicted scores for 231 total samples
+2025-12-18 12:36:23,239 - INFO - [resad_tabular.py:167] - === EXPERIMENT RESULTS ===
+2025-12-18 12:36:23,239 - INFO - [resad_tabular.py:168] - AUC (Area Under ROC Curve): 0.5560
+2025-12-18 12:36:23,241 - INFO - [resad_tabular.py:169] - AP (Average Precision): 0.3762
+2025-12-18 12:36:23,241 - INFO - [resad_tabular.py:170] - Accuracy: 0.5411
+2025-12-18 12:36:23,242 - INFO - [resad_tabular.py:171] - Test samples: 231
+2025-12-18 12:36:23,242 - INFO - [resad_tabular.py:172] - Anomaly ratio: 0.351
+2025-12-18 12:36:23,265 - INFO - [resad_tabular.py:250] - Results saved to: results\results_cross_breastw_to_pima_20251218_123623.json
+2025-12-18 12:36:23,266 - INFO - [resad_tabular.py:251] - Summary saved to: results\results.csv
+2025-12-18 12:36:23,266 - INFO - [resad_tabular.py:252] - === EXPERIMENT COMPLETED ===

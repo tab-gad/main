@@ -1,0 +1,8 @@
+2025-12-18 13:56:40,056 - INFO - [resad_tabular.py:63] - === ResAD Tabular Experiment Started ===
+2025-12-18 13:56:40,056 - INFO - [resad_tabular.py:64] - Log file: logs\resad_tabular_20251218_135640.log
+2025-12-18 13:56:40,060 - INFO - [resad_tabular.py:75] - Using device: cpu
+2025-12-18 13:56:40,060 - INFO - [resad_tabular.py:76] - Experiment mode: cross_domain
+2025-12-18 13:56:40,060 - INFO - [resad_tabular.py:79] - Loading datasets...
+2025-12-18 13:56:40,060 - INFO - [resad_tabular.py:105] - Cross domain experiment:
+2025-12-18 13:56:40,060 - INFO - [resad_tabular.py:106] -   Source datasets: ['wine', 'glass']
+2025-12-18 13:56:40,060 - INFO - [resad_tabular.py:107] -   Target dataset: breastw

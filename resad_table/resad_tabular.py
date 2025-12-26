@@ -131,6 +131,9 @@ def train_resad(config):
     # Initialize and train model
     logger.info("Initializing ResAD model...")
     logger.info(f"Model configuration:")
+    logger.info(f"  - Feature extractor: {config.feature_extractor}")
+    if config.feature_extractor == 'padding':
+        logger.info(f"  - Padding mode: {config.padding_mode}")
     logger.info(f"  - Use multiscale: {config.use_multiscale}")
     logger.info(f"  - Constraintor type: {config.constraintor_type}")
     logger.info(f"  - Estimator type: {config.estimator_type}")
@@ -138,6 +141,7 @@ def train_resad(config):
     logger.info(f"  - Learning rate: {config.lr}")
     
     model = ResADTabular(config)
+    model = model.to(config.device)  # Move model to device
     
     logger.info("Starting model training...")
     model.fit(train_loader, epochs=config.epochs, lr=config.lr)
@@ -216,6 +220,8 @@ def train_resad(config):
         'experiment_name': experiment_name,
         'mode': config.mode,
         'datasets': datasets_info,
+        'feature_extractor': config.feature_extractor,
+        'padding_mode': config.padding_mode if config.feature_extractor == 'padding' else 'N/A',
         'constraintor_type': config.constraintor_type,
         'estimator_type': config.estimator_type,
         'use_multiscale': config.use_multiscale,
@@ -261,7 +267,7 @@ def parse_args():
     parser.add_argument('--mode', type=str, default='single_domain',
                         choices=['single_domain', 'cross_domain'],
                         help='Evaluation mode')
-    parser.add_argument('--source_datasets', nargs='+', default=['breastw', 'pima'],
+    parser.add_argument('--source_datasets', nargs='+', default=['breastw'],
                         help='Source datasets for cross-domain evaluation')
     parser.add_argument('--target_dataset', type=str, default='wdbc',
                         help='Target dataset for cross-domain evaluation')
@@ -271,6 +277,12 @@ def parse_args():
                         help='Random seed')
     
     # Model arguments
+    parser.add_argument('--feature_extractor', type=str, default='tabpfn',
+                        choices=['tabpfn', 'padding'],
+                        help='Type of feature extractor: tabpfn or padding')
+    parser.add_argument('--padding_mode', type=str, default='zero',
+                        choices=['zero', 'mean', 'learned'],
+                        help='Padding mode for padding extractor')
     parser.add_argument('--use_multiscale', action='store_true',
                         help='Use multi-scale feature extractor')
     parser.add_argument('--n_scales', type=int, default=3,
@@ -280,7 +292,7 @@ def parse_args():
     parser.add_argument('--n_fold', type=int, default=5,
                         help='Number of folds for TabPFN cross-validation')
     parser.add_argument('--use_scaler', action='store_true', default=True,
-                        help='Use feature scaling in TabPFN extractor')
+                        help='Use feature scaling in extractor')
     parser.add_argument('--final_embedding_dim', type=int, default=128,
                         help='Final embedding dimension for multi-scale fusion')
     
@@ -303,7 +315,7 @@ def parse_args():
                         help='Number of estimators in ensemble')
     
     # Training arguments
-    parser.add_argument('--epochs', type=int, default=2,
+    parser.add_argument('--epochs', type=int, default=100,
                         help='Number of training epochs')
     parser.add_argument('--batch_size', type=int, default=64,
                         help='Batch size')

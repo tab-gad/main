@@ -1,0 +1,21 @@
+2025-12-18 12:40:15,462 - INFO - [resad_tabular.py:63] - === ResAD Tabular Experiment Started ===
+2025-12-18 12:40:15,462 - INFO - [resad_tabular.py:64] - Log file: logs\resad_tabular_20251218_124015.log
+2025-12-18 12:40:15,466 - INFO - [resad_tabular.py:75] - Using device: cpu
+2025-12-18 12:40:15,466 - INFO - [resad_tabular.py:76] - Experiment mode: cross_domain
+2025-12-18 12:40:15,467 - INFO - [resad_tabular.py:79] - Loading datasets...
+2025-12-18 12:40:15,467 - INFO - [resad_tabular.py:105] - Cross domain experiment:
+2025-12-18 12:40:15,468 - INFO - [resad_tabular.py:106] -   Source datasets: ['pima']
+2025-12-18 12:40:15,469 - INFO - [resad_tabular.py:107] -   Target dataset: breastw
+2025-12-18 12:40:15,479 - INFO - [resad_tabular.py:118] - Dataset Information:
+2025-12-18 12:40:15,480 - INFO - [resad_tabular.py:119] - Train (source combined): {'dataset_name': 'pima', 'split': 'train', 'shape': (537, 8), 'anomaly_ratio': '0.348', 'normal_samples': np.int64(350), 'anomaly_samples': np.int64(187), 'feature_names': ['feature_0', 'feature_1', 'feature_2', 'feature_3', 'feature_4', '...'], 'normalized': True, 'categorical_features': 0}
+2025-12-18 12:40:15,480 - INFO - [resad_tabular.py:120] - Test (target): {'dataset_name': 'breastw', 'split': 'test', 'shape': (205, 9), 'anomaly_ratio': '0.351', 'normal_samples': np.int64(133), 'anomaly_samples': np.int64(72), 'feature_names': ['feature_0', 'feature_1', 'feature_2', 'feature_3', 'feature_4', '...'], 'normalized': True, 'categorical_features': 0}
+2025-12-18 12:40:15,482 - INFO - [resad_tabular.py:132] - Initializing ResAD model...
+2025-12-18 12:40:15,482 - INFO - [resad_tabular.py:133] - Model configuration:
+2025-12-18 12:40:15,483 - INFO - [resad_tabular.py:134] -   - Feature extractor: padding
+2025-12-18 12:40:15,483 - INFO - [resad_tabular.py:136] -   - Padding mode: mean
+2025-12-18 12:40:15,484 - INFO - [resad_tabular.py:137] -   - Use multiscale: False
+2025-12-18 12:40:15,484 - INFO - [resad_tabular.py:138] -   - Constraintor type: residual
+2025-12-18 12:40:15,485 - INFO - [resad_tabular.py:139] -   - Estimator type: normal
+2025-12-18 12:40:15,485 - INFO - [resad_tabular.py:140] -   - Training epochs: 20
+2025-12-18 12:40:15,485 - INFO - [resad_tabular.py:141] -   - Learning rate: 0.001
+2025-12-18 12:40:15,486 - INFO - [resad_tabular.py:145] - Starting model training...

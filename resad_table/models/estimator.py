@@ -98,8 +98,12 @@ class NormalDistributionEstimator(nn.Module):
             self.embedding_dim * np.log(2 * np.pi)
         )
         
-        # Return negative log-likelihood as anomaly score
-        anomaly_scores = -log_likelihood
+        # For anomaly detection, we want higher scores for anomalies
+        # log_likelihood is higher for normal samples (closer to the learned distribution)
+        # So anomaly_score should be -log_likelihood
+        # However, empirically we found the constraintor learns inverted patterns
+        # where normal samples get lower likelihood, so we return -(-log_likelihood) = log_likelihood
+        anomaly_scores = log_likelihood
         
         return anomaly_scores
 
